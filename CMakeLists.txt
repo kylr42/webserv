@@ -6,6 +6,6 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wshadow -Wno-shadow ")
 
 include_directories(includes)
 
-file(GLOB_RECURSE SRCS "*.cpp")
+file(GLOB_RECURSE SRCS "srcs/*.cpp")
 
 add_executable(webserv ${SRCS})
