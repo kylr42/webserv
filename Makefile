@@ -1,22 +1,20 @@
 CC = c++
+CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98 -MMD
 
 OS_NAME	= $(shell uname -s | tr A-Z a-z)
 ifeq	($(OS_NAME), linux)
-	CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -Wno-unused -std=c++98 -MMD
-else
-	CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98 -MMD
+	CPPFLAGS += -Wno-unused
 endif
 
 NAME =	a.out
 
-SRC_DIR = ./srcs/
+INC = ./includes/
 OBJ_DIR = ./objs/
+SRCS = main.cpp
 
-INC = includes
-FILES =	main.cpp
+vpath %.cpp ./srcs/
 
-SRCS = $(addprefix $(SRC_DIR), $(FILES))
-OBJS = $(SRCS:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
+OBJS = $(SRCS:%.cpp=$(OBJ_DIR)%.o)
 DEPS = $(patsubst %.o,%.d,$(OBJS))
 
 all: $(NAME)
@@ -24,7 +22,7 @@ all: $(NAME)
 $(OBJ_DIR) $(SRC_DIR):
 	@mkdir -p $@
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp $(OBJ_DIR)
+$(OBJ_DIR)%.o: %.cpp $(OBJ_DIR)
 	@$(CC) $(CPPFLAGS) -c $< -o $@ -I$(INC)
 	@printf "\033[0;34mObject %-40.100s [\033[0;32m✔\033[0;34m]\r" $@
 
@@ -34,7 +32,7 @@ $(NAME): $(OBJ_DIR) $(SRC_DIR) $(OBJS) $(SRCS)
 
 clean:
 	@$(RM) $(OBJS) $(DEPS)
-	@rm -rf $(DIR)
+	@rm -rf $(OBJ_DIR)
 	@printf '\033[1;35mDelete objects success!\n\033[0m'
 
 fclean: clean
