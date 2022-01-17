@@ -1,0 +1,7 @@
+server {
+	listen 80 localhost;
+	server_name localhost;
+	location / {
+		index a;
+	}
+}
