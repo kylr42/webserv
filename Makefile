@@ -10,7 +10,7 @@ NAME =	a.out
 
 INC = ./includes/
 OBJ_DIR = ./objs/
-SRCS = main.cpp parser.cpp linkedList.cpp utils.cpp
+SRCS = main.cpp parser2.cpp linkedList.cpp utils.cpp SyntaxExeption.cpp validator.cpp
 
 vpath %.cpp ./srcs/ ./srcs/utils/ ./srcs/config/
 

@@ -49,3 +49,17 @@ void	ft_lstadd_front(t_list **lst, t_list *tmp)
 	tmp->next = *lst;
 	*lst = tmp;
 }
+
+void ft_lstfree(t_list **lst)
+{
+	t_list* current = *lst;
+	t_list* next = NULL;
+
+	while (current != NULL)
+	{
+		next = current->next;
+		delete current;
+		current = next;
+	}
+	*lst = NULL;
+}

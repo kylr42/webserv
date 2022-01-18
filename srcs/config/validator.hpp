@@ -12,17 +12,23 @@
 class Validator {
 private:
 	t_list *_content;
-	Validator();
+	std::vector<int> _brackets;
 
 public:
+	Validator();
 	explicit Validator(t_list *content);
 	Validator(Validator const &src);
 	Validator &operator=(const Validator &rhs);
 	~Validator();
 
-	void validateSemicolon();
-	void validateBrackets();
-};
+	void validateBrackets(t_list **tmp);
+	void syntaxValidator();
 
+private:
+
+	static void _deleteMark(t_list **tmp, std::string *str, size_t min_len);
+
+
+};
 
 #endif //WEBSERV_VALIDATOR_HPP

@@ -167,7 +167,7 @@ void parseLocationProperty(t_list *list, t_location *l)
 
 t_location parseLocation(t_list **list, int end)
 {
-	t_location loc ;
+	t_location loc;
 
 	if ((*list)->line.size() != 3)
 		throw SyntaxException((*list)->index + 1, "Location should have a name.");

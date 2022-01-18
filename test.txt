@@ -3,5 +3,5 @@ server {
 	server_name localhost;
 	location / {
 		index a;
-	}
+    }
 }

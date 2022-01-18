@@ -10,6 +10,7 @@ Validator::Validator() {
 
 Validator::Validator(t_list *content) {
 	_content = content;
+	syntaxValidator();
 }
 
 Validator::Validator(const Validator &src) {
@@ -25,33 +26,53 @@ Validator::~Validator() {
 
 }
 
-void Validator::validateSemicolon() {
-	for (t_list *tmp = _content; tmp; tmp = tmp->next) {
-
-	}
-}
-
-void Validator::validateBrackets() {
-	std::vector<int> brackets;
+void Validator::syntaxValidator() {
 	std::string fst_word;
 	std::string lst_word;
 
 	for (t_list *tmp = _content; tmp; tmp = tmp->next) {
 		fst_word = tmp->line[0];
 		lst_word = tmp->line.back();
-		if (fst_word == "}") {
-			if (brackets.empty())
-				throw SyntaxException(tmp, "Unexpected '{'.");
-			if (tmp->line.size() > 1)
-				fst_word = tmp->line[1];
-			brackets.pop_back();
-		}
-		if (lst_word == "{" || lst_word[lst_word.size() - 1] == '{') {
-			if (fst_word != "server" && fst_word != "location" && fst_word != "server{")
-				throw SyntaxException(tmp, "Unexpected '{'.");
-			brackets.push_back(tmp->index + 1);
+
+		if (fst_word[fst_word.size() - 1] == '}'
+			|| lst_word[lst_word.size() - 1] == '{') {
+			validateBrackets(&tmp);
+		} else if (lst_word[lst_word.size() - 1] == ';') {
+			_deleteMark(&tmp, &(tmp->line.back()), 2);
+		} else {
+			throw SyntaxException(tmp->index + 1, PROPERTY_ERROR);
 		}
 	}
-	if (!brackets.empty())
-		throw SyntaxException(brackets.back(), "Expected '}'.");
+	if (!_brackets.empty())
+		throw SyntaxException(_brackets.back(), "Expected '}'.");
 }
+
+void Validator::validateBrackets(t_list **tmp) {
+	std::string fst_word = (*tmp)->line[0];
+	std::string lst_word = (*tmp)->line.back();
+
+	if (fst_word[fst_word.size() - 1] == '}') {
+		if (_brackets.empty())
+			throw SyntaxException(*tmp, "Unexpected '}'.");
+		_deleteMark(tmp, &((*tmp)->line[0]), 0);
+		_brackets.pop_back();
+	}
+	if (lst_word[lst_word.size() - 1] == '{') {
+		_deleteMark(tmp, &((*tmp)->line.back()), 1);
+		_brackets.push_back((*tmp)->index + 1);
+	}
+}
+
+void Validator::_deleteMark(t_list **tmp, std::string *str, size_t min_len) {
+	size_t size_word = str->size();
+
+	if (size_word == 1)
+		(*tmp)->line.pop_back();
+	else
+		*str = str->erase(size_word - 1);
+	if ((*tmp)->line.size() < min_len)
+		throw SyntaxException((*tmp)->index + 1, PROPERTY_ERROR);
+}
+
+
+
