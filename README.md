@@ -1,8 +1,5 @@
 # webserv
+21 project: A program capable of running an HTTP server, handling requests, and parsing configuration files.
+# Общее 🔄
+_Статья в разработке... Вы можете предложить свою версию статьи через `pull request` в репозиторий
 
-### Bibliography:
-1. https://masandilov.ru/network/guide_to_network_programming
-2. https://rsdn.org/article/unix/sockets.xml
-3. https://eax.me/libevent/
-4. https://rtfm.co.ua/c-sokety-i-primer-modeli-client-server/
-5. http://blog.hoxnox.com/inet/tcp_programming.html
