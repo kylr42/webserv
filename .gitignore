@@ -373,4 +373,5 @@ tags
 
 objs
 a.out
+tmp/
 # End of https://www.toptal.com/developers/gitignore/api/c++,clion,jetbrains+all,vim,macos,linux,git,cmake,objective-c

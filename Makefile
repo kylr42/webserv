@@ -1,5 +1,5 @@
 CC = c++
-CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98 -MMD
+CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98
 
 OS_NAME	= $(shell uname -s | tr A-Z a-z)
 ifeq	($(OS_NAME), linux)
@@ -8,25 +8,27 @@ endif
 
 NAME =	a.out
 
-INC = ./includes/
-OBJ_DIR = ./objs/
-SRCS = main.cpp
+SRCS = main.cpp parser.cpp node.cpp utils.cpp SyntaxExeption.cpp validator.cpp config.cpp
 
-vpath %.cpp ./srcs/
+OBJ_DIR = ./objs/
+WORK_DIRS = utils config exeptions
+
+vpath %.cpp ./srcs/ $(addprefix ./srcs/, $(WORK_DIRS))
+INC = -I./includes/ $(addprefix -I./includes/, $(WORK_DIRS))
 
 OBJS = $(SRCS:%.cpp=$(OBJ_DIR)%.o)
 DEPS = $(patsubst %.o,%.d,$(OBJS))
 
 all: $(NAME)
 
-$(OBJ_DIR) $(SRC_DIR):
+$(OBJ_DIR):
 	@mkdir -p $@
 
-$(OBJ_DIR)%.o: %.cpp $(OBJ_DIR)
-	@$(CC) $(CPPFLAGS) -c $< -o $@ -I$(INC)
+$(OBJ_DIR)%.o: %.cpp
+	@$(CC) $(CPPFLAGS) -c $< -o $@ $(INC)
 	@printf "\033[0;34mObject %-40.100s [\033[0;32m✔\033[0;34m]\r" $@
 
-$(NAME): $(OBJ_DIR) $(SRC_DIR) $(OBJS) $(SRCS)
+$(NAME): $(OBJ_DIR) $(OBJS) $(SRCS)
 	@$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
 	@printf '\033[1;32m%-100.100s\n\033[0m' '${NAME} compile success!'
 
