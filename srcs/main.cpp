@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 		std::cout << "Er.: Usage: " << argv[0] << " [config_file]" << std::endl;
 	else
 	{
-		Parser2 parser(argv[1]);
+		Parser parser(argv[1]);
 	}
 
 }

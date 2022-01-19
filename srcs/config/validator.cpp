@@ -2,7 +2,7 @@
 // Created by user on 16.01.2022.
 //
 
-#include "validator.hpp"
+#include "config/validator.hpp"
 
 Validator::Validator() {
 	_content = nullptr;
@@ -38,7 +38,7 @@ void Validator::syntaxValidator() {
 			|| lst_word[lst_word.size() - 1] == '{') {
 			validateBrackets(&tmp);
 		} else if (lst_word[lst_word.size() - 1] == ';') {
-			_deleteMark(&tmp, &(tmp->line.back()), 2);
+			_deleteMark(&tmp, &(tmp->line.back()));
 		} else {
 			throw SyntaxException(tmp->index + 1, PROPERTY_ERROR);
 		}
@@ -54,23 +54,21 @@ void Validator::validateBrackets(t_list **tmp) {
 	if (fst_word[fst_word.size() - 1] == '}') {
 		if (_brackets.empty())
 			throw SyntaxException(*tmp, "Unexpected '}'.");
-		_deleteMark(tmp, &((*tmp)->line[0]), 0);
+//		_deleteMark(tmp, &((*tmp)->line[0]), 0);
 		_brackets.pop_back();
 	}
 	if (lst_word[lst_word.size() - 1] == '{') {
-		_deleteMark(tmp, &((*tmp)->line.back()), 1);
+//		_deleteMark(tmp, &((*tmp)->line.back()), 1);
 		_brackets.push_back((*tmp)->index + 1);
 	}
 }
 
-void Validator::_deleteMark(t_list **tmp, std::string *str, size_t min_len) {
-	size_t size_word = str->size();
-
-	if (size_word == 1)
+void Validator::_deleteMark(t_list **tmp, std::string *str) {
+	if (str->size() == 1)
 		(*tmp)->line.pop_back();
 	else
-		*str = str->erase(size_word - 1);
-	if ((*tmp)->line.size() < min_len)
+		*str = str->erase(str->size() - 1);
+	if ((*tmp)->line.size() < 2)
 		throw SyntaxException((*tmp)->index + 1, PROPERTY_ERROR);
 }
 

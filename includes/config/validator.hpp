@@ -6,7 +6,7 @@
 #define WEBSERV_VALIDATOR_HPP
 
 #include "includes.hpp"
-#include "linkedList.hpp"
+#include "node.hpp"
 #include "SyntaxExeption.hpp"
 
 class Validator {
@@ -15,7 +15,6 @@ private:
 	std::vector<int> _brackets;
 
 public:
-	Validator();
 	explicit Validator(t_list *content);
 	Validator(Validator const &src);
 	Validator &operator=(const Validator &rhs);
@@ -25,8 +24,9 @@ public:
 	void syntaxValidator();
 
 private:
+	Validator();
 
-	static void _deleteMark(t_list **tmp, std::string *str, size_t min_len);
+	static void _deleteMark(t_list **tmp, std::string *str);
 
 
 };

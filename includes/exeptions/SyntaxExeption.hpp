@@ -6,7 +6,7 @@
 #define WEBSERV_SYNTAXEXEPTION_HPP
 
 #include "includes.hpp"
-#include "utils.hpp"
+#include "cutils.hpp"
 
 #define PAGE_ERROR "error_page <code> <file>;"
 #define LISTEN_ERROR "listen <port> <host>;"

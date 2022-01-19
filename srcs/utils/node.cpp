@@ -2,7 +2,7 @@
 // Created by user on 15.01.2022.
 //
 
-#include "linkedList.hpp"
+#include "utils/node.hpp"
 
 t_list	*ft_lstnew(std::vector<std::string> line, int index)
 {

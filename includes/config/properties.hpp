@@ -1,9 +1,9 @@
 //
-// Created by user on 16.01.2022.
+// Created by user on 19.01.2022.
 //
 
-#ifndef WEBSERV_CONFIG_HPP
-#define WEBSERV_CONFIG_HPP
+#ifndef WEBSERV_CONFIG_PROPERTIES_HPP
+#define WEBSERV_CONFIG_PROPERTIES_HPP
 
 #include "includes.hpp"
 
@@ -18,6 +18,12 @@ typedef struct s_location {
 	bool upload_enable;
 	std::string upload_path;
 	int client_max_body_size;
+
+//	constructor
+	s_location(): name("/"),
+				  autoindex(false),
+				  upload_enable(false),
+				  client_max_body_size(1048576){}
 } t_location;
 
 typedef struct s_server {
@@ -27,17 +33,11 @@ typedef struct s_server {
 	std::map<int, std::string> errors;
 	std::vector<t_location> locations;
 	int port;
+
+//	constructor
+	s_server(): host("127.0.0.1"),
+				locations(),
+				port(80){}
 } t_server;
 
-
-class Config {
-private:
-	std::vector<t_server> _servers;
-
-
-public:
-
-};
-
-
-#endif //WEBSERV_CONFIG_HPP
+#endif //WEBSERV_CONFIG_PROPERTIES_HPP

@@ -2,8 +2,8 @@
 // Created by user on 15.01.2022.
 //
 
-#ifndef WEBSERV_LINKEDLIST_HPP
-#define WEBSERV_LINKEDLIST_HPP
+#ifndef WEBSERV_NODE_HPP
+#define WEBSERV_NODE_HPP
 
 #include "includes.hpp"
 
@@ -22,4 +22,4 @@ void	ft_lstfree(t_list **lst);
 void	ft_lstadd_back(t_list **lst, t_list *tmp);
 void	ft_lstadd_front(t_list **lst, t_list *tmp);
 
-#endif //WEBSERV_LINKEDLIST_HPP
+#endif //WEBSERV_NODE_HPP
