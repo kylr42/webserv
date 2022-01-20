@@ -112,10 +112,15 @@ void Parser::_parseServerProperty(t_list *list, t_server *s) {
 	}
 	else if (list->line[0] == "listen")
 	{
-		if (list->line.size() != 3)
+		if (list->line.size() > 3)
 			throw SyntaxException(list->index , LISTEN_ERROR);
-		s->port = ft_atoi(list->line[1]);
-		s->host = list->line[2];
+		if (list->line.size() == 2) {
+			s->port = ft_atoi(list->line[1]);
+			s->host = "localhost";
+		} else {
+			s->port = ft_atoi(list->line[1]);
+			s->host = list->line[2];
+		}
 	}
 	else
 	{

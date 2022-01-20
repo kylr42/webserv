@@ -2,17 +2,15 @@
 // Created by user on 15.01.2022.
 //
 
-#include "utils/node.hpp"
+#include "node.hpp"
 
-t_list	*ft_lstnew(std::vector<std::string> line, int index)
+t_list	*ft_lstnew(const std::vector<std::string>& line, int index)
 {
 	t_list	*list;
 
 	list = new t_list;
-	if (!list)
-		return (NULL);
 	list->line = line;
-	list->next = NULL;
+	list->next = nullptr;
 	list->index = index;
 	return (list);
 }
@@ -30,7 +28,7 @@ size_t	ft_lstsize(t_list *lst)
 t_list	*ft_lstlast(t_list	*lst)
 {
 	if (!lst)
-		return (NULL);
+		return (nullptr);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
@@ -53,13 +51,13 @@ void	ft_lstadd_front(t_list **lst, t_list *tmp)
 void ft_lstfree(t_list **lst)
 {
 	t_list* current = *lst;
-	t_list* next = NULL;
+	t_list* next = nullptr;
 
-	while (current != NULL)
+	while (current != nullptr)
 	{
 		next = current->next;
 		delete current;
 		current = next;
 	}
-	*lst = NULL;
+	*lst = nullptr;
 }
