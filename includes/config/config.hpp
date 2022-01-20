@@ -11,16 +11,17 @@
 
 class Config {
 private:
+	std::vector<t_server> _servers;
 
 public:
-	std::vector<t_server> servers;
-
 	Config();
 	Config(Config const &src);
 	Config &operator=(const Config &rhs);
 	~Config();
 
 	void printConfig();
+	std::vector<t_server> *getServers();
+	void setServers(const std::vector<t_server>& servers);
 
 };
 

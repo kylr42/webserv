@@ -11,10 +11,12 @@ Parser::Parser() {
 
 Parser::Parser(const std::string &file)
 : _config(new Config), _content(nullptr) {
+	Validator val;
+
 	_parseFile(file);
-	Validator val(_content);
+	val.setContent(_content);
+	val.syntaxValidator();
 	_parseContent();
-	_config->printConfig();
 }
 
 Parser::Parser(const Parser &src) {
@@ -27,16 +29,21 @@ Parser::Parser(const Parser &src) {
 Parser &Parser::operator=(const Parser &rhs) {
 	if (_config != nullptr)
 		delete _config;
-	_content = rhs._content;
-	_config = rhs._config;
+	_content = rhs.getContent();
+	_config = rhs.getConfig();
 	return *this;
 }
 
 Parser::~Parser() {
-	if (_config != nullptr)
-		delete _config;
 	ft_lstfree(&_content);
 	_file.close();
+}
+t_list *Parser::getContent() const {
+	return _content;
+}
+
+Config *Parser::getConfig() const {
+	return _config;
 }
 
 void Parser::_parseFile(const std::string &file) {
@@ -80,7 +87,7 @@ void Parser::_parseServer(t_list **list, int end) {
 		else
 			_parseServerProperty(*list, &server);
 	}
-	_config->servers.push_back(server);
+	_config->getServers()->push_back(server);
 }
 
 void Parser::_parseLocation(t_list **list, int end) {
