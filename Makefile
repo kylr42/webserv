@@ -8,7 +8,7 @@ endif
 
 NAME =	a.out
 
-SRCS = main.cpp parser.cpp node.cpp cutils.cpp SyntaxExeption.cpp validator.cpp config.cpp
+SRCS = main.cpp parser.cpp node.cpp cutils.cpp SyntaxExeption.cpp validator.cpp config.cpp utils.cpp
 
 OBJ_DIR = ./objs/
 WORK_DIRS = config exeptions utils

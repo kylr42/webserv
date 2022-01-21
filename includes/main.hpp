@@ -7,6 +7,7 @@
 
 #include "parser.hpp"
 #include "colors.hpp"
+#include "utils.hpp"
 #include <ctime>
 
 #define _LOG

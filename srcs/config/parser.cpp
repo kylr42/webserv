@@ -115,17 +115,17 @@ void Parser::_parseServerProperty(t_list *list, t_server *s) {
 	{
 		if (list->line.size() != 3)
 			throw SyntaxException(list->index, PAGE_ERROR);
-		s->errors[ft_atoi(list->line[1])] = list->line[2];
+		s->errors[ft_stot<int>(list->line[1], std::dec, list->index)] = list->line[2];
 	}
 	else if (list->line[0] == "listen")
 	{
 		if (list->line.size() > 3)
 			throw SyntaxException(list->index , LISTEN_ERROR);
 		if (list->line.size() == 2) {
-			s->port = ft_atoi(list->line[1]);
+			s->port = ft_stot<int>(list->line[1], std::dec, list->index);
 			s->host = "localhost";
 		} else {
-			s->port = ft_atoi(list->line[1]);
+			s->port = ft_stot<int>(list->line[1], std::dec, list->index);
 			s->host = list->line[2];
 		}
 	}
@@ -143,8 +143,14 @@ void Parser::_parseLocationProperty(t_list *list, t_location *l) {
 		throw SyntaxException(list->index, PROPERTY_ERROR);
 	if (list->line[0] == "root")
 		l->root = list->line[1];
+	if (list->line[0] == "cgi_path")
+		l->cgi_path = list->line[1];
+	if (list->line[0] == "upload_path")
+		l->upload_path = list->line[1];
 	if (list->line[0] == "autoindex")
-		l->autoindex = ft_atob(list->line[1]);
+		l->autoindex = ft_stot<bool>(list->line[1], std::boolalpha, list->index);
+	if (list->line[0] == "upload_enable")
+		l->upload_enable = ft_stot<bool>(list->line[1], std::boolalpha, list->index);
 	if (list->line[0] == "index")
 	{
 		for (size_t i = 1; i < list->line.size(); ++i)
@@ -155,17 +161,11 @@ void Parser::_parseLocationProperty(t_list *list, t_location *l) {
 		for (size_t i = 1; i < list->line.size(); ++i)
 			l->cgi_extension.push_back(list->line[i]);
 	}
-	if (list->line[0] == "cgi_path")
-		l->cgi_path = list->line[1];
-	if (list->line[0] == "upload_enable")
-		l->upload_enable = ft_atob(list->line[1]);
-	if (list->line[0] == "upload_path")
-		l->upload_path = list->line[1];
 	if (list->line[0] == "client_max_body_size")
 	{
 		if (list->line.size() != 2)
 			throw SyntaxException(list->index + 1, "root <size[K,M,G]>;");
-		l->client_max_body_size = ft_atoi(list->line[1]);
+		l->client_max_body_size = ft_stot<int>(list->line[1], std::dec, list->index);
 		last = list->line[1][list->line[1].size() - 1];
 		if (last == 'K' || last == 'k')
 			l->client_max_body_size *= 1024;
