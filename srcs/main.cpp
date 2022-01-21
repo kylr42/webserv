@@ -5,13 +5,18 @@
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
-		std::cout << "Er.: Usage: " << argv[0] << " [config_file]" << std::endl;
-	else
+	LOG("Server Running...")
+	Config *config;
+
+	if (argc != 2) {
+		ERROR("Er.: Usage: " + std::string(argv[0]) + " [config_file]")
+		return (1);
+	}
 	{
 		Parser parser(argv[1]);
+		config = parser.getConfig();
 	}
-
+	config->printConfig();
 }
 
 

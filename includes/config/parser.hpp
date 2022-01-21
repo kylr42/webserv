@@ -24,6 +24,9 @@ public:
 	Parser &operator=(const Parser &rhs);
 	~Parser();
 
+	t_list *getContent() const;
+	Config *getConfig() const;
+
 private:
 	Parser();
 

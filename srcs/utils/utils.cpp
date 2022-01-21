@@ -4,4 +4,13 @@
 
 #include "utils.hpp"
 
+std::string ft_itoa(int i)
+{
+	std::string s;
+	std::stringstream ss;
+
+	ss << i;
+	ss >> s;
+	return s;
+}
 

@@ -1,5 +1,5 @@
 CC = c++
-CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow -MMD -std=c++98
 
 OS_NAME	= $(shell uname -s | tr A-Z a-z)
 ifeq	($(OS_NAME), linux)
@@ -8,10 +8,10 @@ endif
 
 NAME =	a.out
 
-SRCS = main.cpp parser.cpp node.cpp utils.cpp SyntaxExeption.cpp validator.cpp config.cpp
+SRCS = main.cpp parser.cpp node.cpp cutils.cpp SyntaxExeption.cpp validator.cpp config.cpp utils.cpp
 
 OBJ_DIR = ./objs/
-WORK_DIRS = utils config exeptions
+WORK_DIRS = config exeptions utils
 
 vpath %.cpp ./srcs/ $(addprefix ./srcs/, $(WORK_DIRS))
 INC = -I./includes/ $(addprefix -I./includes/, $(WORK_DIRS))

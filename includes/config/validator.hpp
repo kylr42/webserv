@@ -15,19 +15,19 @@ private:
 	std::vector<int> _brackets;
 
 public:
+	Validator();
 	explicit Validator(t_list *content);
 	Validator(Validator const &src);
 	Validator &operator=(const Validator &rhs);
 	~Validator();
 
-	void validateBrackets(t_list **tmp);
+
 	void syntaxValidator();
+	void setContent(t_list *content);
 
 private:
-	Validator();
-
+	void _validateBrackets(t_list **tmp);
 	static void _deleteMark(t_list **tmp, std::string *str);
-
 
 };
 

@@ -26,6 +26,10 @@ Validator::~Validator() {
 
 }
 
+void Validator::setContent(t_list *content) {
+	_content = content;
+}
+
 void Validator::syntaxValidator() {
 	std::string fst_word;
 	std::string lst_word;
@@ -36,7 +40,7 @@ void Validator::syntaxValidator() {
 
 		if (fst_word[fst_word.size() - 1] == '}'
 			|| lst_word[lst_word.size() - 1] == '{') {
-			validateBrackets(&tmp);
+			_validateBrackets(&tmp);
 		} else if (lst_word[lst_word.size() - 1] == ';') {
 			_deleteMark(&tmp, &(tmp->line.back()));
 		} else {
@@ -47,7 +51,7 @@ void Validator::syntaxValidator() {
 		throw SyntaxException(_brackets.back(), "Expected '}'.");
 }
 
-void Validator::validateBrackets(t_list **tmp) {
+void Validator::_validateBrackets(t_list **tmp) {
 	std::string fst_word = (*tmp)->line[0];
 	std::string lst_word = (*tmp)->line.back();
 
@@ -71,6 +75,3 @@ void Validator::_deleteMark(t_list **tmp, std::string *str) {
 	if ((*tmp)->line.size() < 2)
 		throw SyntaxException((*tmp)->index + 1, PROPERTY_ERROR);
 }
-
-
-

@@ -11,10 +11,12 @@ Parser::Parser() {
 
 Parser::Parser(const std::string &file)
 : _config(new Config), _content(nullptr) {
+	Validator val;
+
 	_parseFile(file);
-	Validator val(_content);
+	val.setContent(_content);
+	val.syntaxValidator();
 	_parseContent();
-	_config->printConfig();
 }
 
 Parser::Parser(const Parser &src) {
@@ -27,16 +29,21 @@ Parser::Parser(const Parser &src) {
 Parser &Parser::operator=(const Parser &rhs) {
 	if (_config != nullptr)
 		delete _config;
-	_content = rhs._content;
-	_config = rhs._config;
+	_content = rhs.getContent();
+	_config = rhs.getConfig();
 	return *this;
 }
 
 Parser::~Parser() {
-	if (_config != nullptr)
-		delete _config;
 	ft_lstfree(&_content);
 	_file.close();
+}
+t_list *Parser::getContent() const {
+	return _content;
+}
+
+Config *Parser::getConfig() const {
+	return _config;
 }
 
 void Parser::_parseFile(const std::string &file) {
@@ -80,7 +87,7 @@ void Parser::_parseServer(t_list **list, int end) {
 		else
 			_parseServerProperty(*list, &server);
 	}
-	_config->servers.push_back(server);
+	_config->getServers()->push_back(server);
 }
 
 void Parser::_parseLocation(t_list **list, int end) {
@@ -108,14 +115,19 @@ void Parser::_parseServerProperty(t_list *list, t_server *s) {
 	{
 		if (list->line.size() != 3)
 			throw SyntaxException(list->index, PAGE_ERROR);
-		s->errors[ft_atoi(list->line[1])] = list->line[2];
+		s->errors[ft_stot<int>(list->line[1], std::dec, list->index)] = list->line[2];
 	}
 	else if (list->line[0] == "listen")
 	{
-		if (list->line.size() != 3)
+		if (list->line.size() > 3)
 			throw SyntaxException(list->index , LISTEN_ERROR);
-		s->port = ft_atoi(list->line[1]);
-		s->host = list->line[2];
+		if (list->line.size() == 2) {
+			s->port = ft_stot<int>(list->line[1], std::dec, list->index);
+			s->host = "localhost";
+		} else {
+			s->port = ft_stot<int>(list->line[1], std::dec, list->index);
+			s->host = list->line[2];
+		}
 	}
 	else
 	{
@@ -131,8 +143,14 @@ void Parser::_parseLocationProperty(t_list *list, t_location *l) {
 		throw SyntaxException(list->index, PROPERTY_ERROR);
 	if (list->line[0] == "root")
 		l->root = list->line[1];
+	if (list->line[0] == "cgi_path")
+		l->cgi_path = list->line[1];
+	if (list->line[0] == "upload_path")
+		l->upload_path = list->line[1];
 	if (list->line[0] == "autoindex")
-		l->autoindex = ft_atob(list->line[1]);
+		l->autoindex = ft_stot<bool>(list->line[1], std::boolalpha, list->index);
+	if (list->line[0] == "upload_enable")
+		l->upload_enable = ft_stot<bool>(list->line[1], std::boolalpha, list->index);
 	if (list->line[0] == "index")
 	{
 		for (size_t i = 1; i < list->line.size(); ++i)
@@ -143,17 +161,11 @@ void Parser::_parseLocationProperty(t_list *list, t_location *l) {
 		for (size_t i = 1; i < list->line.size(); ++i)
 			l->cgi_extension.push_back(list->line[i]);
 	}
-	if (list->line[0] == "cgi_path")
-		l->cgi_path = list->line[1];
-	if (list->line[0] == "upload_enable")
-		l->upload_enable = ft_atob(list->line[1]);
-	if (list->line[0] == "upload_path")
-		l->upload_path = list->line[1];
 	if (list->line[0] == "client_max_body_size")
 	{
 		if (list->line.size() != 2)
 			throw SyntaxException(list->index + 1, "root <size[K,M,G]>;");
-		l->client_max_body_size = ft_atoi(list->line[1]);
+		l->client_max_body_size = ft_stot<int>(list->line[1], std::dec, list->index);
 		last = list->line[1][list->line[1].size() - 1];
 		if (last == 'K' || last == 'k')
 			l->client_max_body_size *= 1024;

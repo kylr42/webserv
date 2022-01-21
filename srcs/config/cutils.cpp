@@ -4,35 +4,6 @@
 
 #include "cutils.hpp"
 
-std::string ft_itoa(int i)
-{
-	std::string s;
-	std::stringstream ss;
-
-	ss << i;
-	ss >> s;
-	return s;
-}
-
-int ft_atoi(const std::string& s)
-{
-	int value;
-	std::istringstream convert(s);
-
-	convert >> value;
-	return (value);
-}
-
-bool ft_atob(const std::string& s)
-{
-	bool value;
-	std::istringstream convert(s);
-
-	convert >> std::boolalpha >> value;
-	return (value);
-}
-
-
 bool isMethodValid(const std::string& method) {
 	size_t i;
 
