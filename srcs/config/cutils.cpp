@@ -4,6 +4,17 @@
 
 #include "cutils.hpp"
 
+static const char* METHODS[] = {
+		"GET",
+		"HEAD",
+		"POST",
+		"PUT",
+		"DELETE",
+		"CONNECT",
+		"OPTIONS",
+		"TRACE",
+};
+
 bool isMethodValid(const std::string& method) {
 	size_t i;
 
@@ -34,6 +45,8 @@ int nextBrackets(t_list *list)
 				tmp->line[0] = tmp->line[0].erase(tmp->line.size() - 1);
 			break;
 		}
+		if (!tmp->next)
+			throw SyntaxException(tmp, "Unexpected '}'.");
 	}
 	return tmp->index;
 }

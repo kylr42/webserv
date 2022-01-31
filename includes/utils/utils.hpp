@@ -6,7 +6,7 @@
 #define WEBSERV_UTILS_HPP
 
 #include "node.hpp"
-#include "SyntaxExeption.hpp"
+#include "SyntaxException.hpp"
 #include <typeinfo>
 
 std::string ft_itoa(int i);

@@ -8,10 +8,10 @@ endif
 
 NAME =	a.out
 
-SRCS = main.cpp parser.cpp node.cpp cutils.cpp SyntaxExeption.cpp validator.cpp config.cpp utils.cpp
+SRCS = main.cpp parser.cpp node.cpp cutils.cpp SyntaxException.cpp validator.cpp config.cpp utils.cpp
 
 OBJ_DIR = ./objs/
-WORK_DIRS = config exeptions utils
+WORK_DIRS = config exceptions utils
 
 vpath %.cpp ./srcs/ $(addprefix ./srcs/, $(WORK_DIRS))
 INC = -I./includes/ $(addprefix -I./includes/, $(WORK_DIRS))

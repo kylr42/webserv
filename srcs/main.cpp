@@ -12,11 +12,15 @@ int main(int argc, char **argv)
 		ERROR("Er.: Usage: " + std::string(argv[0]) + " [config_file]")
 		return (1);
 	}
-	{
+	try {
 		Parser parser(argv[1]);
 		config = parser.getConfig();
+		config->printConfig();
+
+
+	} catch (std::exception &e){
+		ERROR("Er.:" + std::string(e.what()) + "")
 	}
-	config->printConfig();
 }
 
 

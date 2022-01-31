@@ -2,8 +2,8 @@
 // Created by user on 16.01.2022.
 //
 
-#ifndef WEBSERV_SYNTAXEXEPTION_HPP
-#define WEBSERV_SYNTAXEXEPTION_HPP
+#ifndef WEBSERV_SYNTAXEXCEPTION_HPP
+#define WEBSERV_SYNTAXEXCEPTION_HPP
 
 #include "includes.hpp"
 #include "cutils.hpp"
@@ -25,6 +25,4 @@ public:
 	const char *what() const throw ();
 };
 
-
-
-#endif //WEBSERV_SYNTAXEXEPTION_HPP
+#endif //WEBSERV_SYNTAXEXCEPTION_HPP

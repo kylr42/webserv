@@ -7,7 +7,7 @@
 
 #include "includes.hpp"
 #include "node.hpp"
-#include "SyntaxExeption.hpp"
+#include "SyntaxException.hpp"
 
 class Validator {
 private:

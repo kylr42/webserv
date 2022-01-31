@@ -8,7 +8,7 @@
 #include "includes.hpp"
 #include "validator.hpp"
 #include "node.hpp"
-#include "SyntaxExeption.hpp"
+#include "SyntaxException.hpp"
 #include "config.hpp"
 
 class Parser {

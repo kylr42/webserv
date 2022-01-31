@@ -24,16 +24,4 @@
 	#define nullptr NULL
 #endif
 
-static const char* METHODS[] = {
-		"GET",
-		"HEAD",
-		"POST",
-		"PUT",
-		"DELETE",
-		"CONNECT",
-		"OPTIONS",
-		"TRACE",
-};
-
-
 #endif //WEBSERV_INCLUDES_HPP

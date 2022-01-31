@@ -2,7 +2,7 @@
 // Created by user on 16.01.2022.
 //
 
-#include "SyntaxExeption.hpp"
+#include "SyntaxException.hpp"
 
 SyntaxException::SyntaxException(int line, const std::string &msg) {
 		_msg = "Line: " + ft_itoa(line) + ": " + msg;
